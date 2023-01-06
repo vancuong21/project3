@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.persistence.NoResultException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -28,6 +27,7 @@ public class ExceptionController {
         return ResponseDTO.<Void>builder().status(404).msg("Not Found").build();// view
     }
 
+    // bat loi trung username
     @ExceptionHandler({DataIntegrityViolationException.class})
     @ResponseStatus(code = HttpStatus.CONFLICT)
     public ResponseDTO<Void> conflict(Exception ex) {

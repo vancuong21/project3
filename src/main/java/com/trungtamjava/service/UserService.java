@@ -55,8 +55,9 @@ public class UserService {
 
     // cách 2 dùng modelmapper
     public void update2(UserDTO userDTO) {
-        ModelMapper mapper = new ModelMapper();
         User user = userRepo.findById(userDTO.getId()).orElseThrow(NoResultException::new);
+
+        ModelMapper mapper = new ModelMapper();
         mapper.createTypeMap(UserDTO.class, User.class)
                 .addMappings(map -> {
                     map.skip(User::setPassword);
@@ -98,6 +99,7 @@ public class UserService {
         pageDTO.setTotalPages(pageRS.getTotalPages());
         pageDTO.setTotalElements(pageRS.getTotalElements());
 
+        // java 8: lambda, stream
         List<UserDTO> userDTOs = pageRS.get()
                 .map(user -> new ModelMapper().map(user, UserDTO.class))
                 .collect(Collectors.toList());

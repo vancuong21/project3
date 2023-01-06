@@ -34,7 +34,7 @@ public class ProductService {
         Category category = categoryRepo.findById(productDTO.getCategory().getId()).orElseThrow(NoResultException::new);
 
         Product product = new ModelMapper().map(productDTO, Product.class);
-     //  product.setCategory(category);
+        //  product.setCategory(category);
         productRepo.save(product);
 
         // nếu frontend cần lấy id thì
@@ -49,8 +49,15 @@ public class ProductService {
     })
     public void update(ProductDTO productDTO) {
         Product product = productRepo.findById(productDTO.getId()).orElseThrow(NoResultException::new);
-        //product = new ModelMapper().map(productDTO, Product.class);
         product.setName(productDTO.getName());
+        if (productDTO.getImage() != null) {
+            product.setImage(productDTO.getImage());
+        }
+        product.setPrice(productDTO.getPrice());
+        product.setDescription(productDTO.getDescription());
+        Category category = categoryRepo.findById(productDTO.getCategory().getId()).orElseThrow(NoResultException::new);
+        product.setCategory(category);
+
         productRepo.save(product);
     }
 

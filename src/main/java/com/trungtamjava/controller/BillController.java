@@ -1,10 +1,12 @@
 package com.trungtamjava.controller;
 
 import com.trungtamjava.dto.BillDTO;
+import com.trungtamjava.dto.BillStatisticDTO;
 import com.trungtamjava.dto.PageDTO;
 import com.trungtamjava.dto.ResponseDTO;
 import com.trungtamjava.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,6 @@ import javax.validation.Valid;
 public class BillController {
     @Autowired
     BillService billService;
-
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
@@ -62,6 +63,16 @@ public class BillController {
         return ResponseDTO.<PageDTO<BillDTO>>builder()
                 .status(200)
                 .data(pageRS).build();
+    }
+
+    // thong ke
+    @GetMapping("/statistic")
+    public ResponseDTO<PageDTO<BillStatisticDTO>> get() {
+        PageDTO<BillStatisticDTO> pageRS = billService.statistic();
+        return ResponseDTO.<PageDTO<BillStatisticDTO>>builder()
+                .status(200)
+                .data(pageRS)
+                .build();
     }
 
 }

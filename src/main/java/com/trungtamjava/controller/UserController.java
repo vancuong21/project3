@@ -26,12 +26,13 @@ public class UserController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO<UserDTO> add(@ModelAttribute @Valid UserDTO user) throws IOException { // ModelAttribute: dùng upload file
-        if (!user.getFile().isEmpty()) {
-            final String UPLOAD_FOLDER = "C:/Users/cuong/Downloads/file2/";
+        if (user.getFile() != null && !user.getFile().isEmpty()) {
+            final String UPLOAD_FOLDER = "C:/Users/cuong/Downloads/project3/file2/";
 
             String filename = user.getFile().getOriginalFilename();
             // lay dinh dang file
-            String extension = filename.substring(filename.lastIndexOf(".")); // lay duoi file
+            // lay duoi file
+            String extension = filename.substring(filename.lastIndexOf("."));
             // tao ten moi
             String newFilename = UUID.randomUUID().toString() + extension;
 
@@ -51,7 +52,7 @@ public class UserController {
     @PutMapping("/")
     public ResponseDTO<Void> update(@ModelAttribute @Valid UserDTO user) throws IOException {
         if (!user.getFile().isEmpty()) {
-            final String UPLOAD_FOLDER = "C:/Users/cuong/Downloads/file2/";
+            final String UPLOAD_FOLDER = "C:/Users/cuong/Downloads/project3/file2/";
 
             String filename = user.getFile().getOriginalFilename();
             // lay dinh dang file
@@ -69,6 +70,7 @@ public class UserController {
         userService.update(user);
         return ResponseDTO.<Void>builder().status(200).build();
     }
+
     @PutMapping("/password")
     public ResponseDTO<Void> updatePassword(@RequestBody @Valid UserDTO user) {
         userService.updatePassword(user);

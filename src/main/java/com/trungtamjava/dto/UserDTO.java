@@ -19,8 +19,8 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy") //
+    @DateTimeFormat(pattern = "dd/MM/yyyy") // submit len dung @ModelAttribute
     private Date birthdate;
     @JsonIgnore
     private MultipartFile file;
